@@ -26,15 +26,17 @@ public class CustomerController {
         //add the customers to thr Spring MVC model:
         model.addAttribute("Customers",theCustomers);
 
-        //
+       //
 
         return "list-customer";
     }
+
 
     @GetMapping("/showFormForAdd")
     public String showFromForAdd(Model model){
 
         Customer customer = new Customer();
+
         model.addAttribute("customer",customer);
 
         return "customer-form";
@@ -63,4 +65,42 @@ public class CustomerController {
 
 
     }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("customerId") int id ){
+
+        //delete the customer
+        customerService.deleteCustomer(id);
+
+        return "redirect:/customer/list";
+
+    }
+
+    @PostMapping("/deleteCustomers")
+    public String deleteCustomers(@RequestParam(value = "checkbox", required = false) int[] checkboxValue){
+
+
+
+        if(checkboxValue != null){
+
+            customerService.deleteCustomers(checkboxValue);
+
+        }
+
+
+
+        return "redirect:/customer/list";
+    }
+
+    @GetMapping("/search")
+    public String searchCustomers(@RequestParam("theSearchName") String searchName ,Model model){
+        List<Customer> customers  = customerService.searchCustomers(searchName);
+
+        model.addAttribute("Customers" , customers);
+
+        return "list-customer";
+    }
+
+
+
 }

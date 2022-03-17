@@ -11,4 +11,13 @@ public interface CustomerService {
     public List<Customer> getCustomers();
 
     Customer getCustomer(int id);
+
+    void deleteCustomer(int id);
+
+
+    void deleteCustomers(int[] checkboxValue);
+
+    List<Customer> searchCustomers(String searchName);
+
+
 }
